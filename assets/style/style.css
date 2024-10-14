@@ -1,0 +1,73 @@
+/* 
+Santiago Ramirez
+Blackjack CSS Style Sheet
+ */
+
+@import url('https://fonts.googleapis.com/css?family=Montserrat');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+body {
+    font-size: 18px;
+    text-align: center;
+    text-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+    background-color: rgb(209, 207, 203);
+    color: black;
+}
+
+div {
+    font-size: 14px;
+}
+
+button {
+    border-radius: 8px;
+    color: #ffffff;
+    font-size: 20px;
+    background: #de2c2c;
+    padding: 10px 20px 10px 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+}
+
+button:disabled {
+    background: grey;
+    color: #cccccc;
+}
+
+.login {
+    border-radius: 5px;
+    color: #ffffff;
+    font-size: 14px;
+    background: #de2c2c;
+    padding: 5px 10px 5px 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .5);
+}
+
+.rounded-box {
+    border-radius: 15px;
+    padding: 20px;
+    margin-right: 100px;
+    margin-left: 100px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+    background-color: white;
+    
+}
+
+.stats {
+    font-size: 18px;
+    border-radius: 15px;
+    padding: 20px;
+    display: inline-block;
+    margin: 0 auto;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+    background-color: black;
+    color: white;
+}
+
+.name {
+    font-size: 14px;
+    font-weight: bold;
+    margin: auto;
+}

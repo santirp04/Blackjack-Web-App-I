@@ -1,0 +1,32 @@
+<!--
+Santiago Ramirez
+CSCE 315 - Blackjack I Homework
+index.html
+-->
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <title>Blackjack I</title>
+    <link href="assets/style/style.css"  rel="stylesheet" type="text/css"/>
+  </head>
+  <body>
+    <h1>Blackjack</h1>
+    <h5>Enter a username to play</h5>
+    <div class="rounded-box">     
+      <br><br>
+      <form id="loginform" action="gameplay.html">
+        <label for="username">Username:</label>
+        <input type="text" placeholder="4-20 chars, alphabetical only" id="username" name="username" required pattern="[A-Za-z]{4,20}" ><br><br>                <!-- username form with regex pattern, required-->
+        <input id="loginbutton" class="login" type="submit" value="Login">    <!-- button calls for an event listener when clicked that validates and submits form-->
+      </form>
+      <br><br>
+    </div>
+         
+  </body>
+  <footer>
+    <br>
+    <a href="https://github.com/santirp04/Blackjack-Web-App-I" target="_blank">View This Project on GitHub</a>    <!--Links to GitHub Repo-->
+  </footer>
+  <script src="assets/js/listeners.js" type="text/javascript"></script>     <!--Calls listners js file for the login event handler-->
+</html>
