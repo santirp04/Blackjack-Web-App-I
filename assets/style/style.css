@@ -86,9 +86,8 @@ button:disabled {
 #gameBoard {
     background-color: rgb(0, 94, 0);
     border-color: brown;
-
     border-radius: 25px;
     margin-right: 100px;
     margin-left: 100px;
-
+    
 }

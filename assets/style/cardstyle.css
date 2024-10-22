@@ -11,6 +11,7 @@ Card deck image modified from https://www.vector4free.com
     height: 215px;
     width: 150px;
     border: 1px solid #666;
+    transform: scale(0.8);
     border-radius: 8px;  
 }
 

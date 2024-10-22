@@ -106,6 +106,10 @@ var hand = {        // object defining a hand
         return this.score;
     },
     
+    getDealerShownScore: function () {
+        return this.cards[1].getValue();
+    },
+
     reset: function () {            // resets the hand
         this.cards = [];
         this.score = 0;
@@ -253,7 +257,24 @@ var blackjack = {
         enablePlayButtons(false);           // reenables deal and bet buttons, match has ended
     },
 
-    
+    getRemoteAdvice: function () {
+        $.getJSON('https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore(), data => {
+            console.log(data);
+            if (data.status == 'Success') {
+                console.log("success");
+                if (data.content.Advice == 'Hit') {
+                    addMessage("Server decided to HIT");
+                    this.hit();
+                } else if (data.content.Advice == 'Stay') {
+                    addMessage("Server decided to STAND");
+                    this.stand();
+                }
+            } else { console.log("try again");}
+        })
+        .fail(err => {
+            alert("Try again ERROR");
+        });
+    },
 
     discardCard: function () {              // discards all the cards into the discarded array
         while (this.player.userhand.cards.length > 0) {
