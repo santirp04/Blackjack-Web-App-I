@@ -19,6 +19,18 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
             blackjack.stand();          // calls the stand function to switch to the dealers turn
         });
 
+        $("#xhrbutton").on("click", function() {
+            blackjack.getRemoteAdvice();
+        });
+
+        $("#jquerybutton").on("click", function() {
+            blackjack.getRemoteAdvice();
+        });
+
+        $("#fetchbutton").on("click", function() {
+            blackjack.getRemoteAdvice();
+        });
+
         document.getElementById("deal").addEventListener("click", function() {
             blackjack.deal();           // starts a new game and deals the cards
             

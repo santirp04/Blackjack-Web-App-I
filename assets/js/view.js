@@ -81,6 +81,9 @@ function updateCardsLeft() {                // updates the display for the cards
 function enablePlayButtons(enable) {        // switches between which buttons are avaiable
     document.getElementById("hit").disabled = !enable;          // hit and stand are only enabled when game is ongoing
     document.getElementById("stand").disabled = !enable;
+    document.getElementById("xhrbutton").disabled = !enable;
+    document.getElementById("jquerybutton").disabled = !enable;
+    document.getElementById("fetchbutton").disabled = !enable;
     document.getElementById("deal").disabled = enable;          // once game has ended, deal and bet buttons should be enabled
     document.getElementById("betDecrement").disabled = enable;
     document.getElementById("betIncrement").disabled = enable;

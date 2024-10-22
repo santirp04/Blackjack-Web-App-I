@@ -16,6 +16,7 @@ var gamePlay = {
         this.Blackjack.initialize();
         setUsername(this.getUsername());
         addMessage("Welcome to Blackjack, " + this.getUsername() + "!");        // displays welcome message with the username
+        addMessage("Get and play advice given by server using either XHR, jQuery GET, or Fetch API requests")
     },
 
     isGameOver: function() {                    // returns true if the game is over

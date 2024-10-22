@@ -253,6 +253,8 @@ var blackjack = {
         enablePlayButtons(false);           // reenables deal and bet buttons, match has ended
     },
 
+    
+
     discardCard: function () {              // discards all the cards into the discarded array
         while (this.player.userhand.cards.length > 0) {
             this.carddeck.discarded.push(this.player.userhand.cards.pop());

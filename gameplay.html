@@ -15,20 +15,14 @@ gameplay.html
   </head>
   <body>
     <br>
-    
       <div id="gameBoard">
-        <div class="stats">
-          <p class="name" id="displayUsername"></p>
-          Bet Amount: $<span id="betAmount">0</span>
-          <br>Wallet Amount: $<span id="walletAmount">1000</span>
-          <br>Cards left: <span id="cardsLeft">52</span>
-        </div>  
         <br>
         <h5>Dealer</h5>
         <div id="dealerHand" class="cards"></div>
-        <hr>
+        
         <h5>Player</h5>
         <div id="playerHand" class="cards"></div>
+        <br>
         <hr>
       </div> 
       <br>
@@ -39,8 +33,21 @@ gameplay.html
         <br> 
         <button id="hit" disabled>Hit</button>
         <button id="stand" disabled>Stand</button>
+        <div class="server-methods" style= "display: inline-block";>
+          <button id="xhrbutton" disabled>XHR</button>
+          <button id="jquerybutton" disabled>jQuery GET</button>
+          <button id="fetchbutton" disabled>Fetch API</button>
+        </div>
+        <br><br>
         <button id="deal">Deal</button>
         <button id="reset">Reset</button>
+        <div class="stats">
+          <p class="name" id="displayUsername"></p>
+          Bet Amount: $<span id="betAmount">0</span>
+          <br>Wallet Amount: $<span id="walletAmount">1000</span>
+          <br>Cards left: <span id="cardsLeft">52</span>
+        </div>
+        
         <button id="betIncrement">Bet +</button>
         <button id="betDecrement">Bet -</button>
       </div>
