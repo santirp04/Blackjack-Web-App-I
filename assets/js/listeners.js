@@ -20,15 +20,15 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
         });
 
         $("#xhrbutton").on("click", function() {
-            blackjack.getRemoteAdvice();
+            blackjack.getXHR();
         });
 
         $("#jquerybutton").on("click", function() {
-            blackjack.getRemoteAdvice();
+            blackjack.getjQueryGET();
         });
 
         $("#fetchbutton").on("click", function() {
-            blackjack.getRemoteAdvice();
+            blackjack.getFetch();
         });
 
         document.getElementById("deal").addEventListener("click", function() {

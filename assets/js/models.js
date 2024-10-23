@@ -106,7 +106,7 @@ var hand = {        // object defining a hand
         return this.score;
     },
     
-    getDealerShownScore: function () {
+    getDealerShownScore: function () {      // getter for score of the dealer card that is not facedown, which is always the card at index [1]
         return this.cards[1].getValue();
     },
 
@@ -257,23 +257,53 @@ var blackjack = {
         enablePlayButtons(false);           // reenables deal and bet buttons, match has ended
     },
 
-    getRemoteAdvice: function () {
-        $.getJSON('https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore(), data => {
-            console.log(data);
-            if (data.status == 'Success') {
-                console.log("success");
-                if (data.content.Advice == 'Hit') {
-                    addMessage("Server decided to HIT");
-                    this.hit();
-                } else if (data.content.Advice == 'Stay') {
-                    addMessage("Server decided to STAND");
-                    this.stand();
+    getRemoteAdvice: function (response) {
+        console.log(response);
+        if (response.content.Advice == 'Hit') {
+            addMessage("Server decided to HIT");
+            this.hit();
+        } else if (response.content.Advice == 'Stay') {
+            addMessage("Server decided to STAND");
+            this.stand();
+        }
+    },
+    
+    getXHR: function () {
+        let xhr = new XMLHttpRequest();
+        xhr.overrideMimeType("application/json");
+        xhr.open('GET', 'https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore());
+        xhr.send();
+        xhr.onload = function () {
+            var response = JSON.parse(xhr.responseText);
+            console.log(response);
+                if (xhr.status != 200) {
+                    alert("404 error: Try sending another request");
+                } else {
+                    blackjack.getRemoteAdvice(response);
                 }
-            } else { console.log("try again");}
+        }
+    },
+
+    getjQueryGET: function () {
+        $.getJSON('https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore(), data => {
+            this.getRemoteAdvice(data)
         })
         .fail(err => {
-            alert("Try again ERROR");
+            alert("404 error: Try sending another request");
         });
+    },
+
+    getFetch: function () {
+        fetch('https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore())
+            .then(function(response) {
+                return response.json();
+            })
+            .then(function(jsonResponse) {
+                if (jsonResponse.status == 'Success') {
+                    blackjack.getRemoteAdvice(jsonResponse);
+                } else { alert("404 error: Try sending another request");}
+            })
+            
     },
 
     discardCard: function () {              // discards all the cards into the discarded array
