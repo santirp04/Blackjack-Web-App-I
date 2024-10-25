@@ -20,15 +20,15 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
         });
 
         $("#xhrbutton").on("click", function() {
-            blackjack.getXHR();
+            blackjack.getXHR('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 
         $("#jquerybutton").on("click", function() {
-            blackjack.getjQueryGET();
+            blackjack.getjQueryGET('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 
         $("#fetchbutton").on("click", function() {
-            blackjack.getFetch();
+            blackjack.getFetch('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 
         document.getElementById("deal").addEventListener("click", function() {

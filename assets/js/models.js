@@ -178,7 +178,7 @@ var blackjack = {
     betIncrementValue: 10,
     dealersHitLimit: 16,
     betMultiplier: 2,
-    
+
     initialize: function () {               // initializes the blackjack game. creates a deck, shuffles the deck, sets the users's wallet
         this.carddeck.initialize();
         this.carddeck.shuffle();
@@ -267,11 +267,12 @@ var blackjack = {
             this.stand();
         }
     },
-    
-    getXHR: function () {
+
+    getXHR: function (serverURL) {
+        console.log(serverURL);
         let xhr = new XMLHttpRequest();
         xhr.overrideMimeType("application/json");
-        xhr.open('GET', 'https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore());
+        xhr.open('GET', serverURL);
         xhr.send();
         xhr.onload = function () {
             var response = JSON.parse(xhr.responseText);
@@ -284,8 +285,8 @@ var blackjack = {
         }
     },
 
-    getjQueryGET: function () {
-        $.getJSON('https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore(), data => {
+    getjQueryGET: function (serverURL) {
+        $.getJSON(serverURL, data => {
             this.getRemoteAdvice(data)
         })
         .fail(err => {
@@ -293,15 +294,17 @@ var blackjack = {
         });
     },
 
-    getFetch: function () {
-        fetch('https://convers-e.com/blackjackadvice.php?userscore='+this.player.userhand.getScore()+'&dealerscore='+this.dealer.getDealerShownScore())
+    getFetch: function (serverURL) {
+        fetch(serverURL)
             .then(function(response) {
                 return response.json();
             })
             .then(function(jsonResponse) {
                 if (jsonResponse.status == 'Success') {
                     blackjack.getRemoteAdvice(jsonResponse);
-                } else { alert("404 error: Try sending another request");}
+                } else { 
+                    alert("404 error: Try sending another request");
+                }
             })
             
     },
