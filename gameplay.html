@@ -1,35 +1,37 @@
 <!--
 Santiago Ramirez
-CSCE 315 - Blackjack I Homework
+CSCE 315 - Blackjack II Homework
 gameplay.html
 -->
 
 <!doctype html>
 <html lang="en">
   <head>
-      <meta charset="utf-8">
-      <title>Blackjack I</title>
-      <link href="assets/style/cardstyle.css"  rel="stylesheet" type="text/css"/>
-      <link href="assets/style/style.css"  rel="stylesheet" type="text/css"/>
-      <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>         <!--gets the jQuery library-->
+    <meta charset="utf-8">
+    <title>Blackjack I</title>
+    <link href="assets/style/cardstyle.css"  rel="stylesheet" type="text/css"/>
+    <link href="assets/style/style.css"  rel="stylesheet" type="text/css"/>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>         <!--gets the jQuery library-->
   </head>
-  <body>
+  <body>  
+    <h1 style="text-align: center; color: white;">Blackjack</h1>
+    <br>
+    <div class="container">
       <div id="gameBoard">
         <br>
         <h5>Dealer</h5>
         <div id="dealerHand" class="cards"></div>
         <h5>Player</h5>
         <div id="playerHand" class="cards"></div>
-        <br>        
+        <br><br><br>        
       </div> 
       
-      <div id="messagediv" class="rounded-box"></div>
-      <br>
-      <hr>
+      
       <div id="controls">
         <br> 
         <button id="hit" disabled>Hit</button>
         <button id="stand" disabled>Stand</button>
+        <br><br>
         <div class="server-methods" style= "display: inline-block";>
           <button id="xhrbutton" disabled>XHR</button>
           <button id="jquerybutton" disabled>jQuery GET</button>
@@ -38,21 +40,26 @@ gameplay.html
         <br><br>
         <button id="deal">Deal</button>
         <button id="reset">Reset</button>
+        <br><br>
         <div class="stats">
           <p class="name" id="displayUsername"></p>
           Bet Amount: $<span id="betAmount">0</span>
           <br>Wallet Amount: $<span id="walletAmount">1000</span>
           <br>Cards left: <span id="cardsLeft">52</span>
+          <br><br>
+          <button id="betIncrement">Bet +</button>
+          <button id="betDecrement">Bet -</button>
         </div>
+        <br><br>
+        <div id="messagediv" class="rounded-box"></div>
         
-        <button id="betIncrement">Bet +</button>
-        <button id="betDecrement">Bet -</button>
       </div>
       <br><br>      
       <script src="assets/js/models.js" type="text/javascript"></script>      <!--Downloads the javascript in proper MVC order-->
       <script src="assets/js/view.js" type="text/javascript"></script>
       <script src="assets/js/listeners.js" type="text/javascript"></script>
       <script src="assets/js/app.js" type="text/javascript"></script>
-    </body>
+    </div>
+  </body>
 </html>
 
