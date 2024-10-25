@@ -50,8 +50,8 @@ button:disabled {
 .rounded-box {
     border-radius: 15px;
     padding: 20px;
-    margin-right: 300px;
-    margin-left: 300px;
+    margin-right: 100px;
+    margin-left: 100px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
     background-color: white;
     
@@ -81,6 +81,13 @@ button:disabled {
     font-size: 14px;
     font-weight: bold;
     margin: auto;
+}
+
+.github {
+    position: absolute;
+    top: 0;
+    border: 0;
+    right: 0;
 }
 
 .container {
@@ -116,6 +123,7 @@ button:disabled {
 #messagediv {
     width: auto;
     height: auto;
+    margin: auto;
     padding: 10px;
     box-sizing: border-box;
     justify-content: center;
