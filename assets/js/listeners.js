@@ -19,15 +19,15 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
             blackjack.stand();          // calls the stand function to switch to the dealers turn
         });
 
-        $("#xhrbutton").on("click", function() {
+        $("#xhrbutton").on("click", function() {            // calls the function that gets a request using XHR for advice using both the user and dealer scores
             blackjack.getXHR('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 
-        $("#jquerybutton").on("click", function() {
+        $("#jquerybutton").on("click", function() {         // calls the function to get the server request using jQueryGET
             blackjack.getjQueryGET('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 
-        $("#fetchbutton").on("click", function() {
+        $("#fetchbutton").on("click", function() {          // calls the function to get the server request using Fetch API
             blackjack.getFetch('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 

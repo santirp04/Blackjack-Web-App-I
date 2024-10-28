@@ -257,53 +257,51 @@ var blackjack = {
         enablePlayButtons(false);           // reenables deal and bet buttons, match has ended
     },
 
-    getRemoteAdvice: function (response) {
+    getRemoteAdvice: function (response) {      // takes the response from the server in JSON as a parameter and checks if the advice is to hit or stay
         console.log(response);
         if (response.content.Advice == 'Hit') {
             addMessage("Server decided to HIT");
-            this.hit();
+            this.hit();                         // if advice from server says hit, call the hit function
         } else if (response.content.Advice == 'Stay') {
             addMessage("Server decided to STAND");
-            this.stand();
+            this.stand();                       // if advice from server says stay, call the stand function
         }
     },
 
-    getXHR: function (serverURL) {
-        console.log(serverURL);
-        let xhr = new XMLHttpRequest();
-        xhr.overrideMimeType("application/json");
-        xhr.open('GET', serverURL);
-        xhr.send();
-        xhr.onload = function () {
-            var response = JSON.parse(xhr.responseText);
-            console.log(response);
-                if (xhr.status != 200) {
-                    alert("404 error: Try sending another request");
-                } else {
-                    blackjack.getRemoteAdvice(response);
-                }
+    getXHR: function (serverURL) {              // sends a GET request using XMLHttpRequest
+        let xhr = new XMLHttpRequest();                     // create a new XMLHttpRequest object
+        xhr.overrideMimeType("application/json");           // use JSON
+        xhr.open('GET', serverURL);                         // initialize a GET request to the server URL
+        xhr.send(); 
+        xhr.onload = function () { 
+            var response = JSON.parse(xhr.responseText);    // parse the JSON data
+            if (xhr.status != 200) {                        // check for an error status
+                alert("404 error: Try sending another request");        // alert user if theres an error
+            } else {
+                blackjack.getRemoteAdvice(response);            // call the function to check and exceute the advice from the server
+            }
         }
     },
 
-    getjQueryGET: function (serverURL) {
-        $.getJSON(serverURL, data => {
-            this.getRemoteAdvice(data)
+    getjQueryGET: function (serverURL) {        // sends a GET request using jQuery
+        $.getJSON(serverURL, data => {          // uses getJSON to get the reponse in JSON 
+            this.getRemoteAdvice(data)          // calls the function to get the advice from the response
         })
-        .fail(err => {
+        .fail(err => {                          // checks and alerts if theres an error
             alert("404 error: Try sending another request");
         });
     },
 
-    getFetch: function (serverURL) {
+    getFetch: function (serverURL) {            // sends a GET request using Fetch API
         fetch(serverURL)
             .then(function(response) {
-                return response.json();
+                return response.json();         // return the response in JSON
             })
-            .then(function(jsonResponse) {
+            .then(function(jsonResponse) {      // takes the JSON response and checks if the status is successful
                 if (jsonResponse.status == 'Success') {
-                    blackjack.getRemoteAdvice(jsonResponse);
+                    blackjack.getRemoteAdvice(jsonResponse);    // calls the function to get the advice
                 } else { 
-                    alert("404 error: Try sending another request");
+                    alert("404 error: Try sending another request");        // alerts the user if theres an error
                 }
             })
             

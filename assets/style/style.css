@@ -1,6 +1,6 @@
 /* 
 Santiago Ramirez
-Blackjack CSS Style Sheet
+Blackjack II CSS Style Sheet
  */
 
 @import url('https://fonts.googleapis.com/css?family=Montserrat');
@@ -28,7 +28,7 @@ button {
     font-size: 20px;
     background: #de2c2c;
     padding: 10px 20px 10px 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+    box-shadow: 0 4px 8px #de2c2c83;
 }
 
 button:disabled {
@@ -72,7 +72,7 @@ button:disabled {
     padding: 20px;
     display: inline-block;
     margin: 0 auto;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, .8);
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.2);
     background-color: black;
     color: white;
 }
@@ -94,7 +94,7 @@ button:disabled {
     display: grid;
     grid-template-columns: 2fr 1fr;
     grid-row: 1;
-    column-gap: 10px; /* Adjust the gap as needed */
+    column-gap: 10px; 
 }
 
 #gameBoard {
@@ -107,6 +107,7 @@ button:disabled {
     width: calc(100% - 100px);
     height: calc(100% - 40px); 
     outline: 15px solid rgb(127, 84, 41);
+    box-shadow: 0 4px 8px rgba(127, 84, 41,0.8);
 }
 
 #controls {
@@ -128,7 +129,8 @@ button:disabled {
     box-sizing: border-box;
     justify-content: center;
     align-items: center;
-    outline: 2px solid black; /* Draw an outline of the div */
+    outline: 2px solid black; 
+    box-shadow: 0 4px 8px rgba(255, 255, 255, 0.5);
 }
 
 
