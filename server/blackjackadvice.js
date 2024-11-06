@@ -24,12 +24,10 @@ exports.generateAdvice = function(userScore, dealerScore, callback) {
             dealerScore = 6;
             validDealerScore = true;
         }
-
         if (!validUserScore && validDealerScore) {
             userScore = 14;
             validUserScore = true;
         }
-
         // If both scores are invalid or missing
         if (!validUserScore && !validDealerScore) {
             callback({
@@ -65,10 +63,7 @@ exports.generateAdvice = function(userScore, dealerScore, callback) {
         };
 
         // Invoke the callback with the success response
-        callback({
-            status: 'Success',
-            content: responseContent
-        });
+        callback({status: 'Success', content: responseContent});
     });
 };
 
@@ -92,21 +87,8 @@ exports.reportOutcome = function(outcome, callback) {
                 losses: 0,
                 pushes: 0
             };
-
-            if (!err) {
-                try {
-                    outcomes = JSON.parse(data);
-                } catch (parseErr) {
-                    console.error('Error parsing outcomes.json:', parseErr);
-                    // If parsing fails, reinitialize outcomes
-                    outcomes = {
-                        wins: 0,
-                        losses: 0,
-                        pushes: 0
-                    };
-                }
-            }
-
+            outcomes = JSON.parse(data);
+               
             // Increment the appropriate count based on the outcome
             switch (outcome.toLowerCase()) {
                 case 'won':
@@ -118,11 +100,8 @@ exports.reportOutcome = function(outcome, callback) {
                 case 'push':
                     outcomes.pushes += 1;
                     break;
-                default:
-                    // This case should never occur due to earlier validation
-                    break;
-            }
 
+            }
             // Write the updated outcomes back to the file
             fs.writeFile(outcomesFilePath, JSON.stringify(outcomes, null, 4), 'utf8', (writeErr) => {
                 if (writeErr) {
@@ -133,14 +112,12 @@ exports.reportOutcome = function(outcome, callback) {
                     });
                     return;
                 }
-
                 // Prepare the response content with total counts
                 const responseContent = {
                     wins: outcomes.wins.toString(),
                     losses: outcomes.losses.toString(),
                     pushes: outcomes.pushes.toString()
                 };
-
                 // Invoke the callback with the success response
                 callback({
                     status: 'Success',
