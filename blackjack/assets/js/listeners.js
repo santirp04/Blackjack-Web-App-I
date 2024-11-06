@@ -20,15 +20,7 @@ document.addEventListener("DOMContentLoaded", function() {      // waits for DOM
         });
 
         $("#xhrbutton").on("click", function() {            // calls the function that gets a request using XHR for advice using both the user and dealer scores
-            blackjack.getXHR('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
-        });
-
-        $("#jquerybutton").on("click", function() {         // calls the function to get the server request using jQueryGET
-            blackjack.getjQueryGET('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
-        });
-
-        $("#fetchbutton").on("click", function() {          // calls the function to get the server request using Fetch API
-            blackjack.getFetch('https://convers-e.com/blackjackadvice.php?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
+            blackjack.getXHR('http://127.0.0.1:3000/?userscore='+blackjack.player.userhand.getScore()+'&dealerscore='+blackjack.dealer.getDealerShownScore());
         });
 
         document.getElementById("deal").addEventListener("click", function() {

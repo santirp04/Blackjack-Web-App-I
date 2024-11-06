@@ -258,7 +258,6 @@ var blackjack = {
     },
 
     getRemoteAdvice: function (response) {      // takes the response from the server in JSON as a parameter and checks if the advice is to hit or stay
-        console.log(response);
         if (response.content.Advice == 'Hit') {
             addMessage("Server decided to HIT");
             this.hit();                         // if advice from server says hit, call the hit function
@@ -266,6 +265,16 @@ var blackjack = {
             addMessage("Server decided to STAND");
             this.stand();                       // if advice from server says stay, call the stand function
         }
+    },
+
+    getRemoteOutcome: function (response) {
+        let wins = response.content.wins;
+        let losses = response.content.losses;
+        let pushes = response.content.pushes;
+        addMessage("Overall Stats:")
+        addMessage("Wins: " + wins);
+        addMessage("Losses: " + losses);
+        addMessage("Pushes: " + pushes);
     },
 
     getXHR: function (serverURL) {              // sends a GET request using XMLHttpRequest
@@ -277,8 +286,10 @@ var blackjack = {
             var response = JSON.parse(xhr.responseText);    // parse the JSON data
             if (xhr.status != 200) {                        // check for an error status
                 alert("404 error: Try sending another request");        // alert user if theres an error
-            } else {
+            } else if (response.content.Advice !== undefined) {     // checks if response is for the advice
                 blackjack.getRemoteAdvice(response);            // call the function to check and exceute the advice from the server
+            } else if (response.content.wins !== undefined && response.content.losses !== undefined && response.content.pushes !== undefined) {     // checks if the response is for the outcome
+                blackjack.getRemoteOutcome(response);
             }
         }
     },
@@ -322,10 +333,13 @@ var blackjack = {
         let betIfWon = this.player.getUserBet() * this.betMultiplier;       // sets the possible payout with the given multiplier
         let betValue = this.player.userWallet.getValue()
         if (tied == true) {
+            gamePlay.reportOutcome("push");
             betIfWon = this.player.getUserBet();        // doesnt use the multiplier, refunds the bet if tied
-        }  
-        if (won == true){
+        } else if (won == true){
+            gamePlay.reportOutcome("won");
             this.player.userWallet.setValue(betValue + (betIfWon));     // pays the bet if won
+        } else if (won == false && tied == false) {
+            gamePlay.reportOutcome("lost");
         }
         this.player.resetUserBet();         // sets bet back to 0
         updateWallet();

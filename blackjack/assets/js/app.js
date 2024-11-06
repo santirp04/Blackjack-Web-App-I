@@ -4,6 +4,7 @@
 //handles game initialization and game state
 //-------------------------------------------
 
+
 var gamePlay = {
     Blackjack: Object.create(blackjack),        // creates the blackjack object
   
@@ -16,7 +17,7 @@ var gamePlay = {
         this.Blackjack.initialize();
         setUsername(this.getUsername());
         addMessage("Welcome to Blackjack, " + this.getUsername() + "!");        // displays welcome message with the username
-        addMessage("Get and play advice given by server using either XHR, jQuery GET, or Fetch API requests")
+        addMessage("Get and play advice given by the server using the Remote Move")
     },
 
     isGameOver: function() {                    // returns true if the game is over
@@ -33,6 +34,11 @@ var gamePlay = {
         updatePlayerValue();
         updateDealerValue();
         addMessage("Game Reset!");              // displays message when successfully reset
+    },
+
+    reportOutcome: function(outcome) {          // reports the outcome to the server
+        const serverURL = `http://127.0.0.1:3000/?outcome=`+outcome;
+        blackjack.getXHR(serverURL);                 // sends outcome as a GET request using XHR
     }
 };
 
