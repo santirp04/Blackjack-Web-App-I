@@ -9,18 +9,17 @@ const path = require('path');
 
 const outcomesFilePath = path.join(__dirname, 'outcomes.json');     // the path to the outcomes file
 
-
+// generates the advice based on the user and dealer scores
 exports.generateAdvice = function(userScore, dealerScore, callback) {
-    // Ensure asynchronous execution
     setImmediate(() => {
-        // Helper function to validate scores
+        // checks if score is an integer between 1 and 21
         const isValidScore = (score) => Number.isInteger(score) && score >= 1 && score <= 21;
 
         let validUserScore = isValidScore(userScore);
         let validDealerScore = isValidScore(dealerScore);
 
-        // Assign default scores if necessary
-        if (validUserScore && !validDealerScore) {
+        
+        if (validUserScore && !validDealerScore) {  // default scores if one of the scores are missing or invalid
             dealerScore = 6;
             validDealerScore = true;
         }
@@ -28,18 +27,13 @@ exports.generateAdvice = function(userScore, dealerScore, callback) {
             userScore = 14;
             validUserScore = true;
         }
-        // If both scores are invalid or missing
-        if (!validUserScore && !validDealerScore) {
-            callback({
-                status: 'Error',
-                message: 'Invalid or missing userScore and dealerScore.'
-            });
+        if (!validUserScore && !validDealerScore) {     // check if both scores are invalid or missing
+            callback({status: 'Error', message: 'Invalid or missing userScore and dealerScore.'});
             return;
         }
 
-        // Generate advice based on the scores
+        // decide on advice based on the scores
         let advice = '';
-
         if (userScore >= 17 && userScore <= 21) {
             advice = 'Stay';
         } else if (userScore >= 13 && userScore <= 16) {
@@ -50,80 +44,78 @@ exports.generateAdvice = function(userScore, dealerScore, callback) {
             }
         } else if (userScore >= 4 && userScore <= 12) {
             advice = 'Hit';
-        } else {
-            // For any other unexpected scenarios
+        } else {                // default for any unexpected scenarios
             advice = 'Stay';
         }
-
-        // Prepare the response content
-        const responseContent = {
+  
+        const responseContent = {                   // create the response content with the scores and advice
             "User's Score": userScore.toString(),
             "Dealer's Score": dealerScore.toString(),
             "Advice": advice
-        };
-
-        // Invoke the callback with the success response
-        callback({status: 'Success', content: responseContent});
+        };     
+        callback({status: 'Success', content: responseContent});    // call the callback with the success response
     });
 };
 
 exports.reportOutcome = function(outcome, callback) {
-    // Ensure asynchronous execution
     setImmediate(() => {
-        // Validate the outcome parameter
         const validOutcomes = ['won', 'lost', 'push'];
-        if (!validOutcomes.includes(outcome.toLowerCase())) {
-            callback({
-                status: 'Error',
-                message: 'Invalid outcome parameter. Must be "won", "lost", or "push".'
-            });
+        if (!validOutcomes.includes(outcome.toLowerCase())) {       // check if outcome is valid
+            callback({status: 'Error', message: 'Invalid outcome parameter. Must be "won", "lost", or "push".'});
             return;
         }
 
-        // Read the existing outcomes from the file or initialize them
+        // read the existing outcomes from the file or initialize them
         fs.readFile(outcomesFilePath, 'utf8', (err, data) => {
+            if (err) {          // call the callback if there is an error response
+                callback({status: 'Error', message: 'Failed to read outcomes file. Try again.'});
+                return;
+            }
             let outcomes = {
                 wins: 0,
                 losses: 0,
                 pushes: 0
             };
-            outcomes = JSON.parse(data);
-               
-            // Increment the appropriate count based on the outcome
-            switch (outcome.toLowerCase()) {
-                case 'won':
-                    outcomes.wins += 1;
-                    break;
-                case 'lost':
-                    outcomes.losses += 1;
-                    break;
-                case 'push':
-                    outcomes.pushes += 1;
-                    break;
-
+            outcomes = JSON.parse(data);        // parse the outcomes from the file
+            if (outcome.toLowerCase() === 'won') {      // increment the count based on the outcome
+                outcomes.wins += 1;
+            } else if (outcome.toLowerCase() === 'lost') {
+                outcomes.losses += 1;
+            } else if (outcome.toLowerCase() === 'push') {
+                outcomes.pushes += 1;
             }
-            // Write the updated outcomes back to the file
+
+            // write the updated outcomes back to the file
             fs.writeFile(outcomesFilePath, JSON.stringify(outcomes, null, 4), 'utf8', (writeErr) => {
-                if (writeErr) {
-                    console.error('Error writing to outcomes.json:', writeErr);
-                    callback({
-                        status: 'Error',
-                        message: 'Failed to update outcomes.'
-                    });
+                if (writeErr) {                         // call the callback with the error response
+                    callback({status: 'Error', message: 'Failed to update outcomes. Try again.'});
                     return;
                 }
-                // Prepare the response content with total counts
-                const responseContent = {
+                const responseContent = {               // set the response content with total counts
                     wins: outcomes.wins.toString(),
                     losses: outcomes.losses.toString(),
                     pushes: outcomes.pushes.toString()
                 };
-                // Invoke the callback with the success response
-                callback({
-                    status: 'Success',
-                    content: responseContent
-                });
+                // call the callback with the successful response
+                callback({status: 'Success', content: responseContent});
             });
         });
+    });
+};
+
+// resets the outcomes to the default values of 0 
+exports.resetOutcomes = function(callback) {
+    const defaultOutcomes = {       // sets the default outcomes
+        won: 0,
+        lost: 0,
+        push: 0
+    };
+    // writes to the outcomes file and calls the callback if it was successful or not
+    fs.writeFile(outcomesFilePath, JSON.stringify(defaultOutcomes, null, 2), (err) => {     
+        if (err) {
+            callback({status: 'Error', message: 'Failed to reset outcomes.'});
+        } else {
+            callback({status: 'Success', message: 'Outcomes have been reset.'});
+        }
     });
 };
