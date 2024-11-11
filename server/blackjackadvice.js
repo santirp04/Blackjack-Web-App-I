@@ -104,18 +104,19 @@ exports.reportOutcome = function(outcome, callback) {
 };
 
 // resets the outcomes to the default values of 0 
-exports.resetOutcomes = function(callback) {
+exports.resetOutcomes = function() {
+    console.log('Resetting outcomes...');
     const defaultOutcomes = {       // sets the default outcomes
-        won: 0,
-        lost: 0,
-        push: 0
+        wins: 0,
+        losses: 0,
+        pushes: 0
     };
     // writes to the outcomes file and calls the callback if it was successful or not
     fs.writeFile(outcomesFilePath, JSON.stringify(defaultOutcomes, null, 2), (err) => {     
         if (err) {
-            callback({status: 'Error', message: 'Failed to reset outcomes.'});
+            console.error('404: Failed to reset outcomes:', err);
         } else {
-            callback({status: 'Success', message: 'Outcomes have been reset.'});
+            console.log('Outcomes have been reset.');
         }
     });
 };
